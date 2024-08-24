@@ -15,6 +15,7 @@ class Carro:
     def infoCarro(self):
         print(f"Marca: {self.marca} \nModelo: {self.modelo} \nAno: {self.ano} \nLigado: {self.ligado}")
 
-carro1 = Carro("Chronos", "Fiat", "2025")
-carro1.ligar()
-carro1.infoCarro()
+if __name__=="__main__":
+    carro1 = Carro("Chronos", "Fiat", "2025")
+    carro1.ligar()
+    carro1.infoCarro()
