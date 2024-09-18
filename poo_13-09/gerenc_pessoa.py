@@ -18,23 +18,21 @@ class PessoaJuridica:
 class GerenciadorDeClientes:
     def adicionar_cliente_pf(self):
         self.cliente_pf = []
-        with open("Lista_pessoa_pf.pkl", "wb") as pf:
+        with open("poo_13-09/Lista_pessoa_pf.pkl", "wb") as pf:
             pkl.dump(self.cliente_pf, pf)
 
 
     def adicionar_cliente_pj(self):
         self.cliente_pj = []
-        with open("Lista_pessoa_pj.pkl", "wb") as pj:
+        with open("poo_13-09/Lista_pessoa_pj.pkl", "wb") as pj:
             pkl.dump(self.cliente_pj, pj)
-
+    
 
     def listar_clientes(self):
-        for i in range(len(self.cliente_pf)):
-            print(f"Nome: {self.nome}; Email: {self.email}; CPF = {self.cpf};
-                CNPJ = {self.cnpj}")
-        for i in range(len(self.cliente_pj)):
-            print(f"Nome: {self.nome}; Email: {self.email}; CPF = {self.cpf};
-                CNPJ = {self.cnpj}")
+        for pf in range(PessoaFisica):
+            print(f"Nome: {self.nome}; Email: {self.email}; CPF = {self.cpf}")
+        for pj in range(PessoaJuridica):
+            print(f"Nome: {self.nome}; Email: {self.email}; cnpj = {self.cnpj}")
 
     def buscar_cliente_pf(self):
         if self.nome in self.cliente_pf:
@@ -45,13 +43,23 @@ class GerenciadorDeClientes:
             return self.cliente_pj[self.nome]
 
     def excluir_cliente_pf(self):
-        pass
+        for pf in range(PessoaFisica):
+            if self.nome in self.cliente_pf:
+                self.cliente_pf.remove(self.nome)
 
     def excluir_cliente_pj(self):
-        pass
+         for pf in range(PessoaJuridica):
+            if self.nome in self.cliente_pj:
+                self.cliente_pj.remove(self.nome)
 
     def salvar_dados(self):
-        pass
+        with open("poo_13-09/Lista_pessoa_pf.pkl", "rb") as f:
+            self.cliente_pf = pkl.load(f)
+            print(self.cliente_pf)
+    
+        with open("poo_13-09/Lista_pessoa_pj.pkl", "rb") as f:
+            self.cliente_pj = pkl.load(f)
+            print(self.cliente_pj)
 
     def menu_interativo(self):
         while True:
@@ -86,4 +94,6 @@ class GerenciadorDeClientes:
             else:
                 print("Opção inválida. Por favor, tente novamente.")           
 
-if __name___ == __main__:
+if __name__ == "__main__":
+    gerenciador = GerenciadorDeClientes()
+    gerenciador.menu_interativo()
