@@ -1,65 +1,104 @@
 import pickle as pkl
 
 class Cliente:
-    def __init__(self, nome, email):
+    def __init__(self, nome, email, ids):
+        self.ids = ids
         self.nome = nome
         self.email = email
 
-class PessoaFisica:
-    def __init__(self, nome, email, cpf):
+class PessoaFisica(Cliente):
+    def __init__(self, nome, email, cpf, ids):
+        super(). __init__(nome, email, ids)
         self.cpf = cpf
-        super(). __init__(nome, email)
-
-class PessoaJuridica:
-    def __init__(self, nome, email, cnpj):
+class PessoaJuridica(Cliente):
+    def __init__(self, nome, email, cnpj, ids):
+        super(). __init__(nome, email, ids)
         self.cnpj = cnpj
-        super(). __init__(nome, email)
-
+        
 class GerenciadorDeClientes:
-    def adicionar_cliente_pf(self):
+    def __init__(self):
         self.cliente_pf = []
-        with open("poo_13-09/Lista_pessoa_pf.pkl", "wb") as pf:
-            pkl.dump(self.cliente_pf, pf)
+        self.cliente_pj = []
+        self.ids_contador = 1
 
+    def adicionar_cliente_pf(self):
+        nome = str(input("Nome: "))
+        email = str(input("Email: "))
+        cpf = str(input("CPF: "))
+        cliente = PessoaFisica(nome, email, cpf, self.ids_contador)
+        self.cliente_pf.append(cliente)
+        self.ids_contador += 1
 
     def adicionar_cliente_pj(self):
-        self.cliente_pj = []
-        with open("poo_13-09/Lista_pessoa_pj.pkl", "wb") as pj:
-            pkl.dump(self.cliente_pj, pj)
+        nome = str(input("Nome: "))
+        email = str(input("Email: "))
+        cnpj = str(input("CNPJ: "))
+        cliente = PessoaJuridica(nome, email, cnpj, self.ids_contador)
+        self.cliente_pj.append(cliente)
+        self.ids_contador += 1
     
-
     def listar_clientes(self):
-        for pf in range(PessoaFisica):
-            print(f"Nome: {self.nome}; Email: {self.email}; CPF = {self.cpf}")
-        for pj in range(PessoaJuridica):
-            print(f"Nome: {self.nome}; Email: {self.email}; cnpj = {self.cnpj}")
+        for pf in self.cliente_pf:
+            print(f"ID: {pf.ids}; Nome: {pf.nome}; Email: {pf.email}; CPF = {pf.cpf}")
+        for pj in self.cliente_pj:
+            print(f"ID: {pj.ids} Nome: {pj.nome}; Email: {pj.email}; CNPJ = {pj.cnpj}")
 
     def buscar_cliente_pf(self):
-        if self.nome in self.cliente_pf:
-            return self.cliente_pf[self.nome]
+            ids = int(input("Digite o ID do cliente: "))
+            for cliente in self.cliente_pf:
+                if cliente.ids == ids:
+                    print(f"ID: {cliente.ids}; Nome: {cliente.nome}; Email: {cliente.email}; CPF: {cliente.cpf}")
+                    return cliente
+            print("Cliente não encontrado")
+            return None    
 
     def buscar_cliente_pj(self):
-        if self.nome in self.cliente_pj:
-            return self.cliente_pj[self.nome]
+            ids = int(input("Digite o ID do cliente: "))
+            for cliente in self.cliente_pj:
+                if cliente.ids == ids:
+                    print(f"ID: {cliente.ids}; Nome: {cliente.nome}; Email: {cliente.email}; CNPJ: {cliente.cnpj}")
+                    return cliente
+            print("Cliente não encontrado")
+            return None
 
     def excluir_cliente_pf(self):
-        for pf in range(PessoaFisica):
-            if self.nome in self.cliente_pf:
-                self.cliente_pf.remove(self.nome)
+            ids = int(input("Digite o ID do cliente: "))
+            for cliente in self.cliente_pf:
+                if cliente.ids == ids:
+                    self.cliente_pf.remove(cliente)
+                    print("Cliente excluído com sucesso!")
+                    return
+            print("Cliente não encontrado")
 
-    def excluir_cliente_pj(self):
-         for pf in range(PessoaJuridica):
-            if self.nome in self.cliente_pj:
-                self.cliente_pj.remove(self.nome)
+    def excluir_cliente_pj(self, ids):
+        ids = int(input("Digite o ID do cliente: "))
+        for cliente in self.cliente_pj:
+            if cliente.ids == ids:
+                self.cliente_pj.remove(cliente)
+                print("Cliente excluído com sucesso!")
+                return
+        print("Cliente não encontrado")
 
     def salvar_dados(self):
-        with open("poo_13-09/Lista_pessoa_pf.pkl", "rb") as f:
-            self.cliente_pf = pkl.load(f)
-            print(self.cliente_pf)
+        with open("poo_13-09/Lista_pessoa_pf.pkl", "wb") as f:
+            pkl.dump(self.cliente_pf, f)
     
-        with open("poo_13-09/Lista_pessoa_pj.pkl", "rb") as f:
-            self.cliente_pj = pkl.load(f)
-            print(self.cliente_pj)
+        with open("poo_13-09/Lista_pessoa_pj.pkl", "wb") as f:
+            pkl.dump(self.cliente_pj, f)
+
+    def carregar_dados(self):
+        try:
+            with open("poo_13-09/Lista_pessoa_pf.pkl", "rb") as f:
+                self.cliente_pf = pkl.load(f)
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            self.cliente_pf = []
+        try:
+            with open("poo_13-09/Lista_pessoa_pj.pkl", "rb") as f:
+                self.cliente_pj = pkl.load(f)
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            self.cliente_pj = []
 
     def menu_interativo(self):
         while True:
@@ -86,14 +125,16 @@ class GerenciadorDeClientes:
             elif escolha == 5:
                 self.buscar_cliente_pj()
             elif escolha == 6:
-                self.excluir_cliente_pf
+                self.excluir_cliente_pf()
             elif escolha == 7:
                 self.excluir_cliente_pj()
             elif escolha == 8:
                 self.salvar_dados()
+                break
             else:
                 print("Opção inválida. Por favor, tente novamente.")           
 
 if __name__ == "__main__":
     gerenciador = GerenciadorDeClientes()
+    gerenciador.carregar_dados()
     gerenciador.menu_interativo()
