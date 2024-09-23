@@ -1,5 +1,5 @@
 import sqlite3
-conexao = sqlite3.connect("Usuarios.db")
+conexao = sqlite3.connect("poo_18-09/Usuarios.db")
 cursor = conexao.cursor()
 
 #criar tabela
