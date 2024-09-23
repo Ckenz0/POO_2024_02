@@ -31,7 +31,4 @@ class ContaBancaria():
         print(f"Conta: {self.numero_conta} \
               Titular: {self.titular} \
               Saldo: {self._saldo} \
-              Limite: {self.__limite}")
-
-
-    
+              Limite: {self.__limite}") 

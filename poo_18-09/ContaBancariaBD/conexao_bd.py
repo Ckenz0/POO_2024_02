@@ -15,7 +15,7 @@ class ConexaoBD:
                                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     numero_conta INTEGER NOT NULL,
                                     titular TEXT NOT NULL,
-                                    saldo REAL NOT NULL 
+                                    saldo REAL NOT NULL, 
                                     limite REAL NOT NULL)
                                     ''')
             except sqlite3.Error as e:
@@ -28,7 +28,6 @@ class ConexaoBD:
                 self.coon.close()
             except sqlite3.Error as e:
                 print(f"Erro ao fechar conexão. {e}")
-
 #exemplo de uso
 ##conexao = ConexaoBD()
 #conexao.criar_tabela()

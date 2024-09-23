@@ -13,8 +13,8 @@ if __name__=="__main__":
     conta1.depositar(1)
     conta1.exibir_info()
     conta2.exibir_info()
-    conta_dao = ContaBancariaDAO(conexao)
-    conta_dao.salvar_conta(conta1)
-    conta_dao.salvar_conta(conta2)
+    dao_conta = ContaBancariaDAO(conexao)
+    dao_conta.salvar_conta(conta1)
+    dao_conta.salvar_conta(conta2)
     conexao.fechar_conexao()
     
