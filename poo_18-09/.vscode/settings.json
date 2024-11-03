@@ -1,6 +1,6 @@
 {
     "python.testing.pytestArgs": [
-        "poo_23-10"
+        "poo_11-10"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true

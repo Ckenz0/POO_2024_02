@@ -1,6 +1,5 @@
 # Algumas constantes (serão substituídas por Enum)
 # Essas constantes são usadas em vários lugares
-class Situacao(Enum)
 SITUACAO_APROVADO = 1
 SITUACAO_REPROVADO = 2
 SITUACAO_RECUPERACAO = 3
